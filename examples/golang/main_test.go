@@ -27,26 +27,26 @@ func TestGetRandNames(t *testing.T) {
 }
 
 func TestGetRandName(t *testing.T) {
-  res := GetRandName([]string{"solid"}, []string{"snake"})
+	res := GetRandName([]string{"solid"}, []string{"snake"})
 	if res != "solid snake" {
 		t.Error("Expected a name array containing 'solid snake', got %v", res)
 	}
 }
 
 func TestGetRandNamePure(t *testing.T) {
-	res := GetRandNamePure([]string{"A","B"}, []string{"1","2"},
-		func(n int) int{
+	res := GetRandNamePure([]string{"A", "B"}, []string{"1", "2"},
+		func(n int) int {
 			return 0
 		})
-		if res != "A 1" {
-			t.Error("Expected a name array containing 'A 1', got %v", res)
-		}
-	res = GetRandNamePure([]string{"A","B"}, []string{"1","2"},
-		func(n int) int{
+	if res != "A 1" {
+		t.Error("Expected a name array containing 'A 1', got %v", res)
+	}
+	res = GetRandNamePure([]string{"A", "B"}, []string{"1", "2"},
+		func(n int) int {
 			return 1
 		})
-		if res != "B 2" {
-			t.Error("Expected a name array containing 'B 2', got %v", res)
-		}
+	if res != "B 2" {
+		t.Error("Expected a name array containing 'B 2', got %v", res)
+	}
 
 }
