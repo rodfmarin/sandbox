@@ -1,19 +1,23 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math/rand"
+	"os"
 	"time"
 )
 
 func main() {
-	fmt.Println("Hello Worl")
 	rand.Seed(time.Now().UTC().UnixNano())
 	fmt.Println(GetRandNames(1)[0])
 }
 
-var firstNames = []string{"first", "aasdfasd", "232432"}
-var lastNames = []string{"last", "testteststests", "thisisalastname"}
+// var firstNames = []string{"first", "aasdfasd", "232432"}
+// var lastNames = []string{"last", "testteststests", "thisisalastname"}
+ var firstNames = FileToLines("firstnames.txt")
+ var lastNames = FileToLines("lastnames.txt")
+
 
 func GetRandNames(numNames int) []string {
 	return GetRandNamesImpl(numNames, firstNames, lastNames)
@@ -43,4 +47,25 @@ type RandInt func(int) int
 func GetRandNamePure(firstNames []string, lastNames []string, r RandInt) string {
 
 	return firstNames[r(len(firstNames))] + " " + lastNames[r(len(lastNames))]
+}
+
+//how to test? mock a file, mocking bad?
+func FileToLines(filepath string) []string {
+	f,err := os.Open(filepath)
+	if err != nil {
+		panic(err)
+	}
+	//does defer do automatic releasing of this resource?
+	defer f.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	return lines
+
 }
