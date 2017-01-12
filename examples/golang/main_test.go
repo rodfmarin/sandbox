@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"testing"
 )
 
@@ -48,5 +49,18 @@ func TestGetRandNamePure(t *testing.T) {
 	if res != "B 2" {
 		t.Error("Expected a name array containing 'B 2', got %v", res)
 	}
+
+}
+
+func TestFileToLines(t *testing.T) {
+	_,err := ioutil.ReadFile("firstnames.txt")
+	if err != nil {
+		t.Error("Couldn't read firstnames.txt!")
+	}
+
+	_,err2 := ioutil.ReadFile("lastnames.txt")
+	 if err2 != nil {
+		 t.Error("Couldn't read lastnames.txt!")
+	 }
 
 }
