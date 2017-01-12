@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 )
 
 func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
 	fmt.Println(GetRandNames(1)[0])
 }
 
@@ -47,9 +49,6 @@ func GetRandNamePure(firstNames []string, lastNames []string, r RandInt) string 
 	return firstNames[r(len(firstNames))] + " " + lastNames[r(len(lastNames))]
 }
 
-//how to test? mock a file, mocking bad?
-// ahh there is an ioutil lib that can test...
-// https://golang.org/pkg/io/ioutil/
 func FileToLines(filepath string) []string {
 	f,err := os.Open(filepath)
 	if err != nil {
